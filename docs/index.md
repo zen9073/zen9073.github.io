@@ -1,16 +1,11 @@
 # 常用链接
 
-### 清华大学
+### 开源镜像站
 
-<https://mirrors.tuna.tsinghua.edu.cn/>
-
-### 阿里云
-
-<https://developer.aliyun.com/mirror/>
-
-### 华为云
-
-<https://mirrors.huaweicloud.com/>
+- <https://mirrors.tuna.tsinghua.edu.cn/>
+- <https://mirrors.cloud.tencent.com/>
+- <https://developer.aliyun.com/mirror/>
+- <https://mirrors.huaweicloud.com/>
 
 ### VMware
 

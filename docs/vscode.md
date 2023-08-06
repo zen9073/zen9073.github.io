@@ -19,39 +19,24 @@ sudo apt install code # or code-insiders
 ## 插件
 
 ```shell
-## Microsoft
-# Chinese
-# Python
-# Remote SSH
-# docker
-
-## Reahat
-# ansible
-# vscode-yaml
-
-## HashiCorp
-# Terraform
-
-# shell-format - foxundermoon
-# Code Formatter - Prettier
-
-
-# Rufo - jnbt
-# vim - vscodevim
-
 extensions='
+esbenp.prettier-vscode
+foxundermoon.shell-format
+hashicorp.terraform
+ms-azuretools.vscode-docker
 MS-CEINTL.vscode-language-pack-zh-hans
+ms-python.isort
 ms-python.python
 ms-python.vscode-pylance
 ms-toolsai.jupyter
 ms-toolsai.jupyter-keymap
 ms-toolsai.jupyter-renderers
+ms-toolsai.vscode-jupyter-cell-tags
+ms-toolsai.vscode-jupyter-slideshow
+ms-vscode-remote.remote-containers
 ms-vscode-remote.remote-ssh
 ms-vscode-remote.remote-ssh-edit
-ms-azuretools.vscode-docker
-hashicorp.terraform
-foxundermoon.shell-format
-esbenp.prettier-vscode
+ms-vscode.remote-explorer
 redhat.ansible
 redhat.vscode-yaml
 '

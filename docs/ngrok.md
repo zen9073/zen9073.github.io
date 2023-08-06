@@ -1,21 +1,23 @@
 # ngrok 动态域名服务
 
+## 编译
+
 下载编译环境
 
-```
+```sh
 apt-get install build-essential golang git
 ```
 
 获取代码
 
-```
+```sh
 git clone https://github.com/inconshreveable/ngrok.git ngrok
 cd ngrok
 ```
 
 替换为自签名证书
 
-```
+```sh
 cp ca.crt assets/client/tls/ngrokroot.crt
 cp 9073.me.crt assets/server/tls/snakeoil.crt
 cp 9073.me.key assets/server/tls/snakeoil.key
@@ -23,13 +25,13 @@ cp 9073.me.key assets/server/tls/snakeoil.key
 
 编译 64 位 Linux 服务器端
 
-```
+```sh
 GOOS=linux GOARCH=amd64  make release-server
 ```
 
 编译各系统环境客户端
 
-```
+```sh
 GOOS=darwin GOARCH=amd64  make release-client
 GOOS=windows GOARCH=amd64 make release-client
 GOOS=windows GOARCH=386 make release-client
@@ -37,37 +39,14 @@ GOOS=linux GOARCH=amd64  make release-client
 GOOS=linux GOARCH=386  make release-client
 ```
 
-配置域名
+## 配置
 
-将 `9073.me` 和 `t[0-9]+.9073.me` 域名指向服务器 IP
+将 `9073.me` 和 `t[0-9]+.9073.me` 域名指向服务器 IP，然后配置 nginx。
 
-服务器端启动
+- 对外网卡：`192.168.1.10`
+- 对内网卡：`192.168.1.120`
 
-```
-mv ngrokd /usr/local/bin/
-ngrokd -domain="9073.me" -httpAddr="" -httpsAddr="192.168.1.120:443" -tunnelAddr=":20000"
-```
-
-长期使用需要 supervisor
-
-```
-[program:ngrokd]
-directory = /usr/local/bin/
-command = ngrokd -domain="9073.me" -tunnelAddr=":20000" -httpAddr="" -httpsAddr="192.168.1.120:443"
-autostart = true
-startsecs = 5
-autorestart = true
-startretries = 3
-
-```
-
-nginx 配置
-
-对外网卡：`192.168.1.10`
-
-对内网卡：`192.168.1.120`
-
-```
+```ini
 server {
     listen      192.168.1.10:443 ssl;
     server_name ~^t[0-9]+\.9073\.me$;
@@ -86,23 +65,49 @@ server {
 
 将 ngrok 客户端复制到 bin 目录然后添加以下客户端配置文件内容
 
-```
-cat<< EOF >~/.ngrok
-server_addr: 9073.me:20000
-trust_host_root_certs: true
+## ngrok client
+
+```yaml
+# ~/.ngrok
+server_addr: 9073.me:4443
+trust_host_root_certs: false
+
 tunnels:
-  test:
+  web:
+    subdomain: zen
     proto:
-      https: 80
-    subdomain: t2
-EOF
-ngrok start test
+      https: 8888
+      http: 8888
+  ssh:
+    remote_port: 5922
+    proto:
+      tcp: 22
+  vnc:
+    remote_port: 5900
+    proto:
+      tcp: 5900
 ```
 
-这样可以获取到的全 URL 是 https://t2.9073.me 没有 3 级域名，也没有其他端口
-
-更多使用
+## systemd
 
 ```
-ngrok --help
+#  /etc/systemd/system/ngrokd.service
+[Unit]
+Description=ngrokd
+Wants=network.target
+After=syslog.target
+
+[Service]
+#Type=forking
+Type=simple
+#User=nobody
+PIDFile=/var/run/ngrokd.pid
+ExecStart=/opt/ngrok/ngrokd -domain="ngrok.9073.me" -tunnelAddr="192.168.1.10:4443" -httpsAddr="192.168.1.120:443" -httpAddr="" -tlsKey="/opt/ngrok/ngrok.key" -tlsCrt="/opt/ngrok/ngrok.crt"
+ExecStop=/bin/kill -HUP $MAINPID
+PrivateTmp=True
+#Restart=always
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
 ```

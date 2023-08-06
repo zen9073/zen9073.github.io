@@ -2,13 +2,11 @@
 
 ## mirror
 
-https://mirrors.tuna.tsinghua.edu.cn/proxmox/iso/
+<https://mirrors.tuna.tsinghua.edu.cn/proxmox/iso/>
 
-https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/jammy/current/
+<https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/jammy/current/>
 
-https://mirrors.cloud.tencent.com/ubuntu-cloud-images/jammy/current/
-
-https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso
+<https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso>
 
 ## install
 
@@ -19,7 +17,7 @@ https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/v
 
 ## PVE server
 
-```shell
+```sh
 sed -i 's|^deb http://ftp.debian.org|deb https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list
 sed -i 's|^deb http://security.debian.org|deb https://mirrors.tuna.tsinghua.edu.cn/debian-security|g' /etc/apt/sources.list
 
@@ -33,21 +31,12 @@ apt update && apt full-upgrade -y
 apt install aria2 curl wget htop vim iftop iotop tree netcat net-tools -y
 ```
 
-```shell
-cp /usr/share/perl5/PVE/APLInfo.pm /usr/share/perl5/PVE/APLInfo.pm_back
-sed -i 's|http://download.proxmox.com|https://mirrors.tuna.tsinghua.edu.cn/proxmox|g' /usr/share/perl5/PVE/APLInfo.pm
-```
-
-```shell
-sed -i "s/!== 'active'/== 'active'/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
-```
-
 ## kvm Guest
 
 ### image
 
-```bash
-aria2c -c -x 10 -s 10 https://mirrors.cloud.tencent.com/ubuntu-cloud-images/jammy/current/jammy-server-cloudimg-amd64.img
+```sh
+aria2c -c -x 10 -s 10 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/jammy/current/jammy-server-cloudimg-amd64.img
 
 qemu-img convert -f qcow2 -O raw jammy-server-cloudimg-amd64.img jammy-server-cloudimg-amd64.raw
 
@@ -57,19 +46,11 @@ mkdir -p /raw
 
 mount -o loop,offset=$((227328 * 512)) jammy-server-cloudimg-amd64.raw /raw
 
-sed -i "s@http://.*archive.ubuntu.com@http://mirrors.cloud.tencent.com@g"  /raw/etc/apt/sources.list
-sed -i "s@http://.*security.ubuntu.com@http://mirrors.cloud.tencent.com@g" /raw/etc/apt/sources.list
+sed -i "s@http://.*archive.ubuntu.com@http://mirrors.tuna.tsinghua.edu.cn@g"  /raw/etc/apt/sources.list
+sed -i "s@http://.*security.ubuntu.com@http://mirrors.tuna.tsinghua.edu.cn@g" /raw/etc/apt/sources.list
 
-sed -i "s@http://.*archive.ubuntu.com@http://mirrors.cloud.tencent.com@g"  /raw/etc/cloud/cloud.cfg
-sed -i "s@http://.*security.ubuntu.com@http://mirrors.cloud.tencent.com@g" /raw/etc/cloud/cloud.cfg
-
-
-sed -i "s@http://.*archive.ubuntu.com@http://repo.huaweicloud.com@g"  /raw/etc/apt/sources.list
-sed -i "s@http://.*security.ubuntu.com@http://repo.huaweicloud.com@g" /raw/etc/apt/sources.list
-
-sed -i "s@http://.*archive.ubuntu.com@http://repo.huaweicloud.com@g"  /raw/etc/cloud/cloud.cfg
-sed -i "s@http://.*security.ubuntu.com@http://repo.huaweicloud.com@g" /raw/etc/cloud/cloud.cfg
-
+sed -i "s@http://.*archive.ubuntu.com@http://mirrors.tuna.tsinghua.edu.cn@g"  /raw/etc/cloud/cloud.cfg
+sed -i "s@http://.*security.ubuntu.com@http://mirrors.tuna.tsinghua.edu.cn@g" /raw/etc/cloud/cloud.cfg
 
 umount /raw
 
@@ -78,7 +59,7 @@ umount /raw
 
 ### create
 
-```bash
+```sh
 # 创建虚拟机
 qm create 100
 

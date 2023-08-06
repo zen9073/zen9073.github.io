@@ -2,7 +2,11 @@
 
 ## 安装
 
-直接一条命令安装
+通过国内镜像手动安装
+
+- https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/
+
+或者使用脚本自动完成
 
 ```sh
 curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
