@@ -1,4 +1,4 @@
-# sendemail
+# SendEmail
 
 ## 安装
 

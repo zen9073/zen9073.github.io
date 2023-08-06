@@ -1,8 +1,8 @@
-# Google Chrome 浏览器的使用
+# Chrome
 
 ## 下载
 
-在快捷链接页面 [Google Chrome](index.md) 包含了各平台的下载地址。
+在快捷链接页面 [Google Chrome](links.md) 包含了各平台的下载地址。
 
 ```she
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb

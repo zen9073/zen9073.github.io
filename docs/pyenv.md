@@ -1,4 +1,4 @@
-# pyenv and rbenv
+# Pyenv
 
 ## python
 
