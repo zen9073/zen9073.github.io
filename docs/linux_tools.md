@@ -55,7 +55,6 @@ Host    git.9073.me
 
 > chrome: 用记事本打开 C:\Users\zen\AppData\Local\Google\Chrome\User Data\Default\Secure Preferences
 
-
 ## nemo
 
 ```sh
@@ -75,4 +74,39 @@ old() {
 
 #new
 #old
+```
+
+## cloud init
+
+```yaml
+#cloud-config
+# vim: syntax=yaml
+
+user: root
+disable_root: False
+password: rootroot
+chpasswd:
+  expire: False
+apt:
+  primary:
+    - arches: [amd64]
+      uri: http://repo.huaweicloud.com/ubuntu/
+  security:
+    - uri: http://repo.huaweicloud.com/ubuntu/
+      arches: [amd64]
+package_update: false
+package_upgrade: false
+ssh_authorized_keys:
+  - ssh-rsa ......
+  - ssh-rsa ......
+```
+
+```sh
+cloud-localds cloud-init.iso cloud-init.yaml
+```
+
+## realvnc
+
+```
+cmVhbHZuYyA1LnggNi54IAoKQlEyNEctUERYRTQtS0tLUlMtV0JIWkUtRjVSQ0EKQlEyNEctUERYRTQtS0tLUlMtV0JIWkUtRjVSQ0EKOFpFWkgtUVBBTk0tTlgzQTUtOEM0VFMtOEI5N0EKN0FCNFgtM1lOWEYtQzVNUlItNTlESkctN0hHTkEKVVBMOFAtQ04yTVQtODVFUkEtTjNFM0ItR0VSREEKSFJCUkgtM0JONTItWjhFQ0gtQ0o3QjctTU5YM0EKCg==
 ```
