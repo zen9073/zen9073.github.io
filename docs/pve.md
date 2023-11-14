@@ -24,11 +24,11 @@ sed -i 's|^deb http://security.debian.org|deb https://mirrors.tuna.tsinghua.edu.
 source /etc/os-release
 echo "deb https://mirrors.tuna.tsinghua.edu.cn/proxmox/debian $VERSION_CODENAME pve-no-subscription" >>/etc/apt/sources.list
 
-rm /etc/apt/sources.list.d/pve-enterprise.list
+rm /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/ceph.list
 
 apt update && apt full-upgrade -y
 
-apt install aria2 curl wget htop vim iftop iotop tree netcat net-tools -y
+apt install aria2 curl wget htop vim iftop iotop tree netcat-openbsd net-tools -y
 ```
 
 ## kvm Guest
@@ -119,6 +119,7 @@ qm resize 100 scsi0 5G
       - mosh
       - mtr-tiny
       - p7zip-full
+      - qemu-guest-agent
       - tree
       - vim
       - vnstat
