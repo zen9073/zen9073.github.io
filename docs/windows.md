@@ -22,24 +22,19 @@ slmgr.vbs /ato
 
 ## Offfice 2016 KMS 激活步骤
 
+> ed2k://|file|SW_DVD5_Office_Professional_Plus_2016_64Bit_ChnSimp_MLF_X20-42426.ISO|1123452928|31087A00FF67D4F5B4CBF4AA07C3433B|/
+
 ```bat
-cd /D "C:\Program Files (x86)\Microsoft Office\root\Licenses16"
 
-cscript ..\..\office16\ospp.vbs /inslic:ProPlusVL_KMS_Client-ppd.xrm-ms
-cscript ..\..\office16\ospp.vbs /inslic:ProPlusVL_KMS_Client-ul-oob.xrm-ms
-cscript ..\..\office16\ospp.vbs /inslic:ProPlusVL_KMS_Client-ul.xrm-ms
-cscript ..\..\office16\ospp.vbs /inslic:ProPlusVL_MAK-pl.xrm-ms
-cscript ..\..\office16\ospp.vbs /inslic:ProPlusVL_MAK-ppd.xrm-ms
-cscript ..\..\office16\ospp.vbs /inslic:ProPlusVL_MAK-ul-oob.xrm-ms
-cscript ..\..\office16\ospp.vbs /inslic:ProPlusVL_MAK-ul-phn.xrm-ms
+cd /D "C:\Program Files\Microsoft Office\Office16"
 
-cscript ..\..\office16\ospp.vbs /sethst:192.168.1.1
-cscript ..\..\office16\ospp.vbs /inpkey:XQNVK-8JYDB-WJ9W3-YJ8YR-WFG99
+cscript ospp.vbs /sethst:192.168.1.1
+cscript ospp.vbs /inpkey:XQNVK-8JYDB-WJ9W3-YJ8YR-WFG99
 
-cscript ..\..\office16\ospp.vbs /act
-cscript ..\..\office16\ospp.vbs /dstatus
+cscript ospp.vbs /act
+cscript ospp.vbs /dstatus
 
-cscript ..\..\office16\ospp.vbs /unpkey:BTDRB
+cscript ospp.vbs /unpkey:BTDRB
 
 ```
 
@@ -81,4 +76,13 @@ Windows Registry Editor Version 5.00
 ```bat
 DEL /F /A /Q \\?\%1
 RD /S /Q \\?\%1
+```
+
+## 禁用 WPS Office 强制登录功能
+
+```
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\kingsoft\Office\6.0\plugins\officespace\flogin]
+"enableForceLoginForFirstInstallDevice"="false"
 ```
