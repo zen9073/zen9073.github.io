@@ -48,7 +48,7 @@ done
 
 ## settings 和 snippets
 
-```
+```code
 settings.json -> /home/zen/.zen/etc/vscode/settings.json
 snippets -> /home/zen/.zen/etc/vscode/snippets
 ```

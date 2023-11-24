@@ -22,7 +22,7 @@ rm google-chrome-stable_current_amd64.deb
 
 在地址栏输入 `https://www.google.com/ncr` 然后只要不清空 cookie 就会一直有效。
 
-### 使用 www.google.com 搜索
+### 使用 `www.google.com` 搜索
 
 打开 `chrome://settings/searchEngines` 页面，先选择使用其他，然后删除 `Google`,再新建 `Google Search Engine` 内容就使用下面的链接填充。
 

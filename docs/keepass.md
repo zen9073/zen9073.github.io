@@ -4,7 +4,7 @@
 
 ```sh
 sudo apt install -y keepass2
-sudo apt install -y install libcanberra-gtk-module
+sudo apt install -y libcanberra-gtk-module
 
 ```
 
@@ -12,7 +12,7 @@ sudo apt install -y install libcanberra-gtk-module
 
 - 下载语言包
 
-https://downloads.sourceforge.net/keepass/KeePass-2.44-Chinese_Simplified.zip
+<https://downloads.sourceforge.net/keepass/KeePass-2.44-Chinese_Simplified.zip>
 
 - 设置字体
 

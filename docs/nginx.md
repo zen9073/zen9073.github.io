@@ -1,6 +1,6 @@
 # Nginx
 
-# 安装
+## 安装
 
 基于我常用的 ubuntu 或者 debian 这两个 Linux 发行版安装 mainline 版简略过程。
 

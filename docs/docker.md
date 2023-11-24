@@ -4,7 +4,7 @@
 
 通过国内镜像手动安装
 
-- https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/
+- <https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/>
 
 或者使用脚本自动完成
 

@@ -2,13 +2,13 @@
 
 ## 安装
 
-```shell
+```sh
 apt-get install sendemail libio-socket-ssl-perl libnet-ssleay-perl
 ```
 
 ## 使用
 
-```shell
+```sh
 /usr/bin/sendEmail \
 -s smtp.mailgun.org:587 \
 -o tls=yes \

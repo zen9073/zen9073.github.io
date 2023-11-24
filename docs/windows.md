@@ -40,7 +40,7 @@ cscript ospp.vbs /unpkey:BTDRB
 
 ## 删除 windwos 10/11 的库
 
-```
+```code
 Windows Registry Editor Version 5.00
 
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{088e3905-0323-4b02-9826-5d99428e115f}]
@@ -59,7 +59,7 @@ Windows Registry Editor Version 5.00
 
 ## 在此处打开命令窗口
 
-```
+```code
 Windows Registry Editor Version 5.00
 
 [HKEY_CLASSES_ROOT\Directory\background\shell\OpenCMDHere]
@@ -80,7 +80,7 @@ RD /S /Q \\?\%1
 
 ## 禁用 WPS Office 强制登录功能
 
-```
+```code
 Windows Registry Editor Version 5.00
 
 [HKEY_CURRENT_USER\Software\kingsoft\Office\6.0\plugins\officespace\flogin]

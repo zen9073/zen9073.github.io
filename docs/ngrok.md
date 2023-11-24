@@ -90,7 +90,7 @@ tunnels:
 
 ## systemd
 
-```
+```code
 #  /etc/systemd/system/ngrokd.service
 [Unit]
 Description=ngrokd
