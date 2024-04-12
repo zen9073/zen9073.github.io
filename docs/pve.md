@@ -27,8 +27,7 @@ echo "deb https://mirrors.tuna.tsinghua.edu.cn/proxmox/debian $VERSION_CODENAME 
 rm /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/ceph.list
 
 apt update && apt full-upgrade -y
-
-apt install aria2 curl wget htop vim iftop iotop tree netcat-openbsd net-tools -y
+apt install aria2 curl wget htop vim iftop iotop tree netcat-openbsd net-tools ifupdown2 -y
 ```
 
 ## kvm Guest
@@ -36,25 +35,20 @@ apt install aria2 curl wget htop vim iftop iotop tree netcat-openbsd net-tools -
 ### image
 
 ```sh
-aria2c -c -x 10 -s 10 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/jammy/current/jammy-server-cloudimg-amd64.img
-
+aria2c -c -x 10 -s 10 https://mirrors.huaweicloud.com/ubuntu-cloud-images/jammy/current/jammy-server-cloudimg-amd64.img
 qemu-img convert -f qcow2 -O raw jammy-server-cloudimg-amd64.img jammy-server-cloudimg-amd64.raw
 
-fdisk -ul jammy-server-cloudimg-amd64.raw
-
 mkdir -p /raw
-
+# fdisk -ul jammy-server-cloudimg-amd64.raw
 mount -o loop,offset=$((227328 * 512)) jammy-server-cloudimg-amd64.raw /raw
 
-sed -i "s@http://.*archive.ubuntu.com@http://mirrors.tuna.tsinghua.edu.cn@g"  /raw/etc/apt/sources.list
-sed -i "s@http://.*security.ubuntu.com@http://mirrors.tuna.tsinghua.edu.cn@g" /raw/etc/apt/sources.list
+sed -i "s@http://.*archive.ubuntu.com@http://mirrors.huaweicloud.com@g"  /raw/etc/apt/sources.list
+sed -i "s@http://.*security.ubuntu.com@http://mirrors.huaweicloud.com@g" /raw/etc/apt/sources.list
 
-sed -i "s@http://.*archive.ubuntu.com@http://mirrors.tuna.tsinghua.edu.cn@g"  /raw/etc/cloud/cloud.cfg
-sed -i "s@http://.*security.ubuntu.com@http://mirrors.tuna.tsinghua.edu.cn@g" /raw/etc/cloud/cloud.cfg
+sed -i "s@http://.*archive.ubuntu.com@http://mirrors.huaweicloud.com@g"  /raw/etc/cloud/cloud.cfg
+sed -i "s@http://.*security.ubuntu.com@http://mirrors.huaweicloud.com@g" /raw/etc/cloud/cloud.cfg
 
 umount /raw
-
-
 ```
 
 ### create
@@ -76,11 +70,9 @@ qm set 100 --sshkey ~/.ssh/authorized_keys
 
 # 添加网卡设置
 qm set 100 --net0 virtio,bridge=vmbr0
-qm set 100 --ipconfig0 ip=10.10.10.100/24,gw=10.10.10.1
-
-# 添加第二快网卡设置
-#qm set 100 --net1 virtio,bridge=vmbr1
-#qm set 100 --ipconfig1 ip=10.10.8.100/24
+qm set 100 --ipconfig0
+# qm set 100 --ipconfig0 ip=dhcp
+# qm set 100 --ipconfig0 ip=192.168.1.11/24,gw=192.168.1.1
 
 # 其他杂项设置
 qm set 100 --serial0 socket --vga serial0
@@ -94,7 +86,6 @@ qm set 100 --name ubuntu
 qm set 100 --cores 1
 qm set 100 --memory 1024
 qm resize 100 scsi0 5G
-
 ```
 
 ## 系统初始化设置
