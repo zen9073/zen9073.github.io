@@ -4,7 +4,7 @@
 
 <https://mirrors.tuna.tsinghua.edu.cn/proxmox/iso/>
 
-<https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/jammy/current/>
+<https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/noble/current/>
 
 <https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso>
 
@@ -13,20 +13,40 @@
 自主分区：
 
 - swap 0
-- root 20G
+- ~~root 20G~~
 
 ## PVE Server
 
 ```sh
-# apt
+# sources pve8
+sed -i 's|^deb http://deb.debian.org|deb https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list
 sed -i 's|^deb http://ftp.debian.org|deb https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list
-sed -i 's|^deb http://security.debian.org|deb https://mirrors.tuna.tsinghua.edu.cn/debian-security|g' /etc/apt/sources.list
+sed -i 's|^deb http://security.debian.org|deb https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list
+
+rm /etc/apt/sources.list.d/ceph.list
+rm /etc/apt/sources.list.d/pve-enterprise.list
 
 source /etc/os-release
-echo "deb https://mirrors.tuna.tsinghua.edu.cn/proxmox/debian $VERSION_CODENAME pve-no-subscription" >>/etc/apt/sources.list
+echo >> /etc/apt/sources.list "deb https://mirrors.tuna.tsinghua.edu.cn/proxmox/debian $VERSION_CODENAME pve-no-subscription"
 
-rm /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/ceph.list
+# sources pve9
+sed -i 's|^URIs: http://deb.debian.org|URIs: https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list.d/debian.sources
+sed -i 's|^URIs: http://ftp.debian.org|URIs: https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list.d/debian.sources
+sed -i 's|^URIs: http://security.debian.org|URIs: https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list.d/debian.sources
 
+rm /etc/apt/sources.list.d/ceph.sources
+rm /etc/apt/sources.list.d/pve-enterprise.sources
+
+source /etc/os-release
+cat << EOF >/etc/apt/sources.list.d/proxmox.sources
+Types: deb
+URIs: https://mirrors.tuna.tsinghua.edu.cn/proxmox/debian/pve
+Suites: $VERSION_CODENAME
+Components: pve-no-subscription
+Signed-By: /usr/share/keyrings/proxmox-archive-keyring.gpg
+EOF
+
+# apt
 apt update && apt full-upgrade -y
 apt install -y aria2 curl wget htop vim iftop iotop tree netcat-openbsd net-tools ifupdown2
 apt install -y libgl1 libegl1
@@ -43,8 +63,27 @@ df -hT
 /etc/pve/storage.cfg
 
 # bash
+sed -i 's|# zh_CN.UTF-8 UTF-8|zh_CN.UTF-8 UTF-8|' /etc/locale.gen
+locale-gen
+
 echo >> ~/.bashrc "export LC_ALL='en_US.UTF-8'"
 echo >> ~/.bashrc "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '"
+
+# vim
+cat << EOF >~/.vimrc
+syntax on
+hi Comment ctermfg=6
+let loaded_matchparen=1
+set encoding=utf-8
+set tabstop=4
+set softtabstop=4
+set expandtab
+set ruler
+set showcmd
+set showmatch
+set hlsearch
+set incsearch
+EOF
 ```
 
 ## KVM Guest
@@ -52,15 +91,15 @@ echo >> ~/.bashrc "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[
 ### Image
 
 ```sh
-aria2c -c -x 10 -s 10 https://mirrors.huaweicloud.com/ubuntu-cloud-images/jammy/current/jammy-server-cloudimg-amd64.img
-qemu-img convert -f qcow2 -O raw jammy-server-cloudimg-amd64.img jammy-server-cloudimg-amd64.raw
+aria2c -c -x 10 -s 10 https://mirrors.huaweicloud.com/ubuntu-cloud-images/noble/current/noble-server-cloudimg-amd64.img
+qemu-img convert -f qcow2 -O raw noble-server-cloudimg-amd64.img noble-server-cloudimg-amd64.raw
 
 mkdir -p /raw
-# fdisk -ul jammy-server-cloudimg-amd64.raw
-mount -o loop,offset=$((227328 * 512)) jammy-server-cloudimg-amd64.raw /raw
+# fdisk -ul noble-server-cloudimg-amd64.raw
+mount -o loop,offset=$((2099200 * 512)) noble-server-cloudimg-amd64.raw /raw
 
-sed -i "s@http://.*archive.ubuntu.com@http://mirrors.huaweicloud.com@g"  /raw/etc/apt/sources.list
-sed -i "s@http://.*security.ubuntu.com@http://mirrors.huaweicloud.com@g" /raw/etc/apt/sources.list
+sed -i "s@http://.*archive.ubuntu.com@http://mirrors.huaweicloud.com@g"  /raw/etc/apt/sources.list.d/ubuntu.sources
+sed -i "s@http://.*security.ubuntu.com@http://mirrors.huaweicloud.com@g" /raw/etc/apt/sources.list.d/ubuntu.sources
 
 sed -i "s@http://.*archive.ubuntu.com@http://mirrors.huaweicloud.com@g"  /raw/etc/cloud/cloud.cfg
 sed -i "s@http://.*security.ubuntu.com@http://mirrors.huaweicloud.com@g" /raw/etc/cloud/cloud.cfg
@@ -75,9 +114,9 @@ umount /raw
 qm create 100
 
 # 导入 cloudimg 文件作为硬盘
-# qm importdisk 100 jammy-server-cloudimg-amd64.raw local-lvm --format raw
+# qm importdisk 100 noble-server-cloudimg-amd64.raw local-lvm --format raw
 # qm set 100 --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-100-disk-0
-qm importdisk 100 jammy-server-cloudimg-amd64.raw local --format raw
+qm importdisk 100 noble-server-cloudimg-amd64.raw local --format raw
 qm set 100 --scsihw virtio-scsi-single --scsi0 local:100/vm-100-disk-0.raw
 
 # 设置启动盘
@@ -85,7 +124,7 @@ qm set 100 --boot c --bootdisk scsi0
 
 # 添加 cloudinit 设置
 # qm set 100 --ide2 local-lvm:cloudinit
-qm set 100 --ide2 local:cloudinit
+qm set 100 --ide2 local:cloudinit,format=raw
 qm set 100 --ciuser root
 qm set 100 --ciupgrade 0
 qm set 100 --sshkey ~/.ssh/authorized_keys
@@ -106,7 +145,7 @@ qm set 100 --name ubuntu
 # 设置 CPU 内存 硬盘
 qm set 100 --cores 1
 qm set 100 --memory 1024
-qm resize 100 scsi0 5G
+qm resize 100 scsi0 10G
 ```
 
 ## 系统初始化设置
@@ -138,6 +177,8 @@ qm resize 100 scsi0 5G
       - vnstat
       - wget
       - zip
+      - jq
+      - yq
 
   pre_tasks:
     - raw: bash -c "test -e /usr/bin/python3 || (apt -qqy update && apt install -qqy python3)"
