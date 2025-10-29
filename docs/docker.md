@@ -15,14 +15,14 @@ curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 手动通过华为镜像安装
 
 ```sh
-sudo apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring
+sudo apt install -y curl gnupg2 ca-certificates lsb-release ubuntu-keyring
 
 curl https://mirrors.huaweicloud.com/docker-ce/linux/ubuntu/gpg | gpg --dearmor \
 	| sudo tee /etc/apt/trusted.gpg.d/docker-ce.gpg >/dev/null
 
 sudo add-apt-repository "deb [arch=amd64] https://mirrors.huaweicloud.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
 
-sudo apt-get install docker-ce python3-docker
+sudo apt install -y docker-ce python3-docker
 
 sudo apt-mark hold docker-buildx-plugin docker-ce docker-ce-cli docker-ce-rootless-extras docker-compose-plugin python3-docker
 
