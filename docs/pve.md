@@ -10,10 +10,15 @@
 
 ## Install
 
+```sh
+sudo ddrescue -d -D -f proxmox-ve_9.0-1.iso /dev/sda
+# dd bs=1M conv=fdatasync if=./proxmox-ve_*.iso of=/dev/XYZ
+```
+
 自主分区：
 
 - swap 0
-- ~~root 20G~~
+- maxvz 0
 
 ## PVE Server
 
@@ -60,7 +65,7 @@ pvs
 df -hT
 
 # storage
-/etc/pve/storage.cfg
+cat /etc/pve/storage.cfg
 
 # bash
 sed -i 's|# zh_CN.UTF-8 UTF-8|zh_CN.UTF-8 UTF-8|' /etc/locale.gen
@@ -335,5 +340,4 @@ qm resize 101 scsi0 10G
           ip route add $lan_ip via $switch
         dest: /root/route_add.sh
         mode: "0755"
-
 ```
