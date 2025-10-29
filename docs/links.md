@@ -4,12 +4,8 @@
 
 - <https://mirrors.tuna.tsinghua.edu.cn/>
 - <https://mirrors.cloud.tencent.com/>
-- <https://developer.aliyun.com/mirror/>
 - <https://mirrors.huaweicloud.com/>
-
-## VMware
-
-<https://softwareupdate.vmware.com/cds/vmw-desktop/>
+- <https://developer.aliyun.com/mirror/>
 
 ## Google Chrome
 
@@ -31,9 +27,11 @@ Windows 64-bit
 ## Windows 四大系统工具
 
 <http://www.piriform.com/CCleaner/download/portable>
-<http://www.piriform.com/Defraggler/download/portable>
-<http://www.piriform.com/Recuva/download/portable>
-<http://www.piriform.com/Speccy/download/portable>
+<https://download.ccleaner.com/portable/ccsetup639.zip>
+<https://download.ccleaner.com/ccsetup639.exe>
+<https://download.ccleaner.com/dfsetup222.exe>
+<https://download.ccleaner.com/rcsetup154.exe>
+<https://download.ccleaner.com/spsetup133.exe>
 
 ## DirectX
 
