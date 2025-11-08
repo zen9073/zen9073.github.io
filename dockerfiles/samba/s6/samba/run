@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/usr/sbin/smbd -F --no-process-group -s /etc/samba/smb.conf
+#/usr/sbin/smbd -FS --no-process-group -s /etc/samba/smb.conf

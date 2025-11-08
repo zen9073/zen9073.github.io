@@ -1,0 +1,38 @@
+syntax = "proto2";
+
+// Unofficial definition for Google Authenticator Migration exports
+message OtpParameters {
+    optional bytes secret = 1;
+    optional string name = 2;
+    optional string issuer = 3;
+
+    enum Algorithm {
+        ALGORITHM_UNSPECIFIED = 0;
+        ALGORITHM_SHA1 = 1;
+    }
+    optional Algorithm algorithm = 4 [default = ALGORITHM_SHA1];
+
+    enum DigitCount {
+        DIGIT_COUNT_UNSPECIFIED = 0;
+        DIGIT_COUNT_SIX = 1;
+        DIGIT_COUNT_EIGHT = 2;
+    }
+    optional DigitCount digits = 5 [default = DIGIT_COUNT_SIX];
+
+    enum OtpType {
+        OTP_TYPE_UNSPECIFIED = 0;
+        OTP_TYPE_HOTP = 1;
+        OTP_TYPE_TOTP = 2;
+    }
+    optional OtpType type = 6 [default = OTP_TYPE_TOTP];
+
+    optional int64 counter = 7; // Only used for HOTP
+}
+
+message MigrationPayload {
+    repeated OtpParameters otp_parameters = 1;
+    optional int32 version = 2;
+    optional int32 batch_size = 3;
+    optional int32 batch_index = 4;
+    optional int64 batch_id = 5;
+}

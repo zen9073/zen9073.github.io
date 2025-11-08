@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ocserv -t && ocserv -f

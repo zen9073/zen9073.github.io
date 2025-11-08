@@ -1,0 +1,21 @@
+###
+server {
+    listen 7000 default_server;
+    server_name _;
+    charset utf-8;
+
+    access_log /var/log/nginx/dav.access.log;
+    error_log /var/log/nginx/dav.error.log;
+
+    root /data;
+    location / {
+        dav_methods PUT MKCOL COPY MOVE;
+        dav_ext_methods PROPFIND OPTIONS;
+        dav_access user:r group:r all:r;
+    }
+
+    location ^~ /robots.txt {
+        alias /etc/nginx/robots.txt;
+    }
+
+}
