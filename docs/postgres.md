@@ -21,6 +21,9 @@ sudo apt install -y postgresql-client-18 postgresql-client-common libpq-dev
 
 # server
 sudo apt install -y postgresql-18
+
+# pgvector
+sudo apt install -y postgresql-18-pgvector
 ```
 
 ## 认证
