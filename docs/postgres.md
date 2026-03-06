@@ -4,15 +4,15 @@
 
 通过国内镜像手动安装
 
-- <https://mirrors.tuna.tsinghua.edu.cn/postgresql/repos/apt/>
+- <https://mirrors.aliyun.com/postgresql/repos/apt/>
 
 ```sh
 sudo apt install -y curl gnupg2 ca-certificates lsb-release ubuntu-keyring
 
-curl https://mirrors.tuna.tsinghua.edu.cn/postgresql/repos/apt/ACCC4CF8.asc \
+curl https://mirrors.aliyun.com/postgresql/repos/apt/ACCC4CF8.asc \
  | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/postgresql.gpg >/dev/null
 
-sudo add-apt-repository "deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/postgresql/repos/apt $(lsb_release -cs)-pgdg main"
+sudo add-apt-repository "deb [arch=amd64] https://mirrors.aliyun.com/postgresql/repos/apt $(lsb_release -cs)-pgdg main"
 
 sudo apt update
 
