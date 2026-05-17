@@ -39,12 +39,6 @@ Host    100
     Hostname    192.168.1.100
     IdentityFile ~/.ssh/id_rsa
 
-
-Host    git.9073.me
-    HostName        git.9073.me
-    IdentityFile    ~/.ssh/git.key
-    IdentitiesOnly  Yes
-
 ```
 
 ## wget 自动修正文件名
@@ -53,7 +47,7 @@ Host    git.9073.me
 
 ## chrome 首页被劫持
 
-> chrome: 用记事本打开 C:\Users\zen\AppData\Local\Google\Chrome\User Data\Default\Secure Preferences
+> chrome: 用记事本打开 %localappdata%\Google\Chrome\User Data\Default\Secure Preferences
 
 ## nemo
 

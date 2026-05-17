@@ -54,5 +54,5 @@ EOF
 桌面环境还需要添加用户到 docker 组
 
 ```sh
-usermod -aG docker zen
+sudo usermod -a -G docker $USER
 ```

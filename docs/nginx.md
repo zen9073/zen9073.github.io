@@ -167,7 +167,7 @@ ssl_certificate_key /etc/nginx/ssl/server.key;
 server {
     listen 80;
     listen [::]:80;
-    server_name wiki.9073.me;
+    server_name example.org;
 
     # 高性能 HTTP -> HTTPS 重定向
     return 301 https://$host$request_uri;
@@ -178,7 +178,7 @@ server {
     listen 443 ssl http2;
     listen 443 quic reuseport; # HTTP/3 端口
     listen [::]:443 ssl http2;
-    server_name wiki.9073.me;
+    server_name example.org;
     charset     utf-8;
 
     # 证书引用
@@ -262,7 +262,7 @@ Disallow: /
 2026 年推荐的“极简私人”版
 
 ```
-# wiki.9073.me - Private Repository
+# example.org - Private Repository
 User-agent: *
 Disallow: /
 

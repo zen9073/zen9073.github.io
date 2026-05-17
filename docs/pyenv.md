@@ -38,10 +38,10 @@ pip install --upgrade setuptools
 ## ruby
 
 ```sh
-git clone https://github.com/rbenv/rbenv.git $HOME/.zen/opt/rbenv
+git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 
 # ruby
-export RBENV_ROOT="$HOME/.zen/opt/rbenv"
+export RBENV_ROOT="$HOME/.rbenv"
 export PATH=${RBENV_ROOT}/bin:$PATH
 eval "$(rbenv init -)"
 
