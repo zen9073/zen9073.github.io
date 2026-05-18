@@ -12,12 +12,13 @@ cd ~/.pyenv && src/configure && make -C src
 
 # 设置环境变量
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'export PYTHON_BUILD_MIRROR_URL="https://mirrors.huaweicloud.com/python/' >> ~/.bashrc
 echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
 echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 
 # 通过中国镜像安装指定版本
 export v=3.10.12
-wget https://npm.taobao.org/mirrors/python/$v/Python-$v.tar.xz -P ~/.pyenv/cache/
+# wget https://mirrors.huaweicloud.com/python/$v/Python-$v.tar.xz -P ~/.pyenv/cache/
 pyenv install $v
 pyenv global  $v
 
@@ -42,6 +43,7 @@ git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 
 # ruby
 export RBENV_ROOT="$HOME/.rbenv"
+export RUBY_BUILD_MIRROR_URL=https://cache.ruby-china.com
 export PATH=${RBENV_ROOT}/bin:$PATH
 eval "$(rbenv init -)"
 

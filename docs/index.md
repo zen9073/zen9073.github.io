@@ -45,8 +45,5 @@ Windows 64-bit
 ## WinARA
 
 - <https://www.win-rar.com/fileadmin/winrar-versions/sc20181016/wrr/wrar561sc.exe>
-- <https://www.win-rar.com/fileadmin/winrar-versions/sc20181016/wrr/winrar-x64-561sc.exe>
+- <https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-722sc.exe>
 
-## Adobe Reader 11
-
-- <http://ardownload.adobe.com/pub/adobe/reader/win/11.x/11.0.00/zh_CN/AdbeRdr11000_zh_CN.exe>

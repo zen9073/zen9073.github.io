@@ -8,7 +8,7 @@
 
 ```shell
 openssl req -new -x509 -nodes -days 3650 \
-    -subj "/CN=example.com." \
+    -subj "/CN=example.org." \
     -keyout server.key \
     -out server.crt
 ```
@@ -23,7 +23,7 @@ openssl genrsa -out server.key
 openssl req -new -x509 -days 3650 \
     -key server.key \
     -out server.crt \
-    -subj "/CN=example.com."
+    -subj "/CN=example.org."
 ```
 
 ### ec 证书
@@ -33,7 +33,7 @@ openssl req -new -x509 -days 3650 \
 ```shell
 openssl req -new -x509 -nodes -days 3650 \
     -newkey ec:<(openssl ecparam -name prime256v1) \
-    -subj "/CN=example.com." \
+    -subj "/CN=example.org." \
     -keyout server.key \
     -out server.crt
 ```
@@ -48,7 +48,7 @@ openssl ecparam -genkey -name secp256r1 | openssl ec -out server.key
 openssl req -new -x509 -days 3650 \
     -key server.key \
     -out server.crt \
-    -subj "/CN=example.com."
+    -subj "/CN=example.org."
 ```
 
 ### 第三方签发
@@ -56,7 +56,7 @@ openssl req -new -x509 -days 3650 \
 生成 csr 文件提交给第三方签发证书。
 
 ```shell
-openssl req -new -key server.key -out server.csr -subj "/CN=example.com."
+openssl req -new -key server.key -out server.csr -subj "/CN=example.org."
 ```
 
 ## 查看和校验
@@ -100,12 +100,12 @@ writing EC key
 
 ```shell
 # 域名
--addext "subjectAltName = DNS:www.example.com."
+-addext "subjectAltName = DNS:www.example.org."
 
 # IP
 -addext "subjectAltName = IP:1.2.3.4"
 
 # 多条信息
--addext "subjectAltName = DNS:www.example.com.,IP:1.2.3.4"
+-addext "subjectAltName = DNS:www.example.org.,IP:1.2.3.4"
 
 ```

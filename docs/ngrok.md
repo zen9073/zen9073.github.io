@@ -19,8 +19,8 @@ cd ngrok
 
 ```sh
 cp ca.crt assets/client/tls/ngrokroot.crt
-cp tunnel.com.crt assets/server/tls/snakeoil.crt
-cp tunnel.com.key assets/server/tls/snakeoil.key
+cp example.org.crt assets/server/tls/snakeoil.crt
+cp example.org.key assets/server/tls/snakeoil.key
 ```
 
 编译 64 位 Linux 服务器端
@@ -41,7 +41,7 @@ GOOS=linux GOARCH=386  make release-client
 
 ## 配置
 
-将 `tunnel.com` 和 `t[0-9]+.tunnel.com` 域名指向服务器 IP，然后配置 nginx。
+将 `example.org` 和 `*.example.org` 域名指向服务器 IP，然后配置 nginx。
 
 - 对外网卡：`192.168.1.10`
 - 对内网卡：`192.168.1.110`
@@ -49,11 +49,11 @@ GOOS=linux GOARCH=386  make release-client
 ```ini
 server {
     listen      192.168.1.10:443 ssl;
-    server_name *.tunnel.com;
+    server_name *.example.org;
     charset     utf-8;
 
-    ssl_certificate     /etc/ssl/tunnel.com.crt;
-    ssl_certificate_key /etc/ssl/tunnel.com.key;
+    ssl_certificate     /etc/ssl/example.org.crt;
+    ssl_certificate_key /etc/ssl/example.org.key;
 
     location / {
         proxy_pass https://192.168.1.110:443;
@@ -61,7 +61,7 @@ server {
 }
 ```
 
-可以确保 *.tunnel.com 域名可以被 nginx 解析，直接发送到 ngrok 服务。
+可以确保 *.example.org 域名可以被 nginx 解析，直接发送到 ngrok 服务。
 
 将 ngrok 客户端复制到 bin 目录然后添加以下客户端配置文件内容
 
@@ -69,7 +69,7 @@ server {
 
 ```yaml
 # ~/.ngrok
-server_addr: tunnel.com:4443
+server_addr: example.org:4443
 trust_host_root_certs: false
 
 tunnels:
@@ -102,7 +102,7 @@ After=syslog.target
 Type=simple
 #User=nobody
 PIDFile=/var/run/ngrokd.pid
-ExecStart=/opt/ngrok/ngrokd -domain="ngrok.tunnel.com" -tunnelAddr="192.168.1.10:4443" -httpsAddr="192.168.1.110:443" -httpAddr="192.168.1.110:80" -tlsKey="/opt/ngrok/ngrok.key" -tlsCrt="/opt/ngrok/ngrok.crt"
+ExecStart=/opt/ngrok/ngrokd -domain="example.org" -tunnelAddr="192.168.1.10:4443" -httpsAddr="192.168.1.110:443" -httpAddr="192.168.1.110:80" -tlsKey="/opt/ngrok/ngrok.key" -tlsCrt="/opt/ngrok/ngrok.crt"
 ExecStop=/bin/kill -HUP $MAINPID
 PrivateTmp=True
 #Restart=always
